@@ -14,7 +14,7 @@ start:
 
     ;step 2
     mov ah, 0x02 ;reads the sectors from the drive
-    mov al, 8 ;the number of sectors the kernel takes up
+    mov al, 16 ;the number of sectors the kernel takes up
     mov ch, 0 ;the cylinder number this is the first one
     mov cl, 2 ;the sector number set to 2 because the kernel starts at sector 2
     mov dh, 0 ;the first drive head
@@ -23,9 +23,9 @@ start:
     int 0x13 ;read from the disk
 
     ;step 3
-    mov ah, 0x0E ;the char output
-    mov al, 'h' ;the thing we output
-    int 0x10 ;call bios
+    ;mov ah, 0x0E ;the char output
+    ;mov al, 'h' ;the thing we output
+    ;int 0x10 ;call bios
 
     ;load the a20 lines 
     in al, 0x92

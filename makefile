@@ -1,3 +1,5 @@
+#almost all of this makefile is made my ai cause idk this
+
 # Tools
 NASM    = nasm
 CC      = gcc
@@ -17,9 +19,17 @@ folder:
 boot.bin: boot.asm folder
 	$(NASM) -f bin boot.asm -o build\boot.bin
 
-# Compile and link C kernel without PE image base warnings
-kernel.tmp: kernel.c folder
-	$(CC) $(CFLAGS) -Wl,--image-base=0x1000 -Ttext 0x1000 -Wl,-e,_kernel_main kernel.c include\stdiok.c -o build\kernel.tmp
+# Assemble entry stub
+kernel_entry.o: enter_ker.asm folder
+	$(NASM) -f win32 enter_ker.asm -o build\kernel_entry.o
+
+# Compile C kernel
+kernel.o: kernel.c folder
+	$(CC) $(CFLAGS) -c kernel.c -o build\kernel.o
+
+# Link kernel_entry.o FIRST at 0x1000
+kernel.tmp: kernel_entry.o kernel.o folder
+	$(CC) $(CFLAGS) -Wl,--image-base=0x1000 -Ttext 0x1000 -Wl,-e,_start build\kernel_entry.o build\kernel.o -o build\kernel.tmp
 
 # Strip PE headers to raw machine binary
 kernel.bin: kernel.tmp folder
