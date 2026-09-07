@@ -1,5 +1,3 @@
-#almost all of this makefile is made my ai cause idk this
-
 # Tools
 NASM    = nasm
 CC      = gcc
@@ -27,15 +25,19 @@ kernel_entry.o: enter_ker.asm folder
 kernel.o: kernel.c folder
 	$(CC) $(CFLAGS) -c kernel.c -o build\kernel.o
 
-# Link kernel_entry.o FIRST at 0x1000
-kernel.tmp: kernel_entry.o kernel.o folder
-	$(CC) $(CFLAGS) -Wl,--image-base=0x1000 -Ttext 0x1000 -Wl,-e,_start build\kernel_entry.o build\kernel.o -o build\kernel.tmp
+#compile the stuff for the screen
+screen.o: screen\screen.c folder
+	$(CC) $(CFLAGS) -c screen\screen.c -o build\screen.o
 
-# Strip PE headers to raw machine binary
+# Link object files into an ELF/PE intermediate file using linker script
+kernel.tmp: kernel_entry.o kernel.o screen.o folder
+	$(CC) $(CFLAGS) -T linker.ld build\screen.o build\kernel_entry.o build\kernel.o -o build\kernel.tmp
+
+# Strip executable headers into a pure, raw binary
 kernel.bin: kernel.tmp folder
 	$(OBJCOPY) -O binary build\kernel.tmp build\kernel.bin
 
-# Binary copy for Windows CMD/PowerShell (replaces 'cat')
+# Combine bootloader and kernel into a single image
 os-image.bin: boot.bin kernel.bin folder
 	cmd /c "copy /b build\boot.bin + build\kernel.bin build\os-image.bin"
 
