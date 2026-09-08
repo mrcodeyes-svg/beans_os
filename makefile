@@ -14,24 +14,28 @@ folder:
 	if not exist build mkdir build
 
 # Assemble bootloader
-boot.bin: boot.asm folder
-	$(NASM) -f bin boot.asm -o build\boot.bin
+boot.bin: src\boot.asm folder
+	$(NASM) -f bin src\boot.asm -o build\boot.bin
 
 # Assemble entry stub
-kernel_entry.o: enter_ker.asm folder
-	$(NASM) -f win32 enter_ker.asm -o build\kernel_entry.o
+kernel_entry.o: src\enter_ker.asm folder
+	$(NASM) -f win32 src\enter_ker.asm -o build\kernel_entry.o
 
 # Compile C kernel
-kernel.o: kernel.c folder
-	$(CC) $(CFLAGS) -c kernel.c -o build\kernel.o
+kernel.o: src\kernel.c folder
+	$(CC) $(CFLAGS) -c src\kernel.c -o build\kernel.o
+
+#compile stuff for the keyboard
+keyboard.o: src\keyboard\keyboard.c folder
+	$(CC) $(CFLAGS) -c src\keyboard\keyboard.c -o build\keyboard.o
 
 #compile the stuff for the screen
-screen.o: screen\screen.c folder
-	$(CC) $(CFLAGS) -c screen\screen.c -o build\screen.o
+screen.o: src\screen\screen.c folder
+	$(CC) $(CFLAGS) -c src\screen\screen.c -o build\screen.o
 
 # Link object files into an ELF/PE intermediate file using linker script
-kernel.tmp: kernel_entry.o kernel.o screen.o folder
-	$(CC) $(CFLAGS) -T linker.ld build\screen.o build\kernel_entry.o build\kernel.o -o build\kernel.tmp
+kernel.tmp: kernel_entry.o kernel.o keyboard.o screen.o folder
+	$(CC) $(CFLAGS) -T src\linker.ld build\keyboard.o build\screen.o build\kernel_entry.o build\kernel.o -o build\kernel.tmp
 
 # Strip executable headers into a pure, raw binary
 kernel.bin: kernel.tmp folder

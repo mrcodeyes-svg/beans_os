@@ -1,4 +1,5 @@
 #include "screen/screen.h"
+#include "keyboard/keyboard.h"
 
 //a welcome
 void welcome() {
@@ -15,11 +16,14 @@ void kernel_main() {
     //say hi
     welcome();
 
-    //print 0x01
+    //print 0x30
+    print_char('\n', black);
     print_char('0x30', black);
 
     // Hang the CPU safely
     while (1) {
-        __asm__("hlt");
+        //get a key and print it
+        print_char(get_key(), black);
+       // __asm__("hlt");
     }
 }
