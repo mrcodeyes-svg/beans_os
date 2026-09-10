@@ -1,5 +1,5 @@
-#include "screen/screen.h"
-#include "keyboard/keyboard.h"
+#include "screen\screen.h"
+#include "screen\keyboard\keyboard.h"
 
 //a welcome
 void welcome() {
@@ -20,10 +20,18 @@ void kernel_main() {
     print_char('\n', black);
     print_char('0x30', black);
 
+    //make a var for the key
+    char key = 0;
+
     // Hang the CPU safely
     while (1) {
-        //get a key and print it
-        print_char(get_key(), black);
-       // __asm__("hlt");
+        //get the key
+        key = get_key_code();
+        //check if the key is not zero 
+        //if (key != 0) {
+            //print it
+            print_hex(key, black);
+        //}
+        // __asm__("hlt");
     }
 }

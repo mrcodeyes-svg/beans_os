@@ -1,6 +1,6 @@
 #include "keyboard.h"
+#include "base_functions\base_functions.h"
 
-//this was made by ai
 // Inline assembly functions for I/O port communication
 static inline unsigned char inb(unsigned short port) {
     unsigned char result;
@@ -10,7 +10,7 @@ static inline unsigned char inb(unsigned short port) {
 
 //this was human and ai
 //get code and char
-unsigned char get_key() {
+unsigned char get_key_code() {
     //if it has nothing then we return 0
     if ((inb(key_stat) & 0x01) == 0) {
         return 0;

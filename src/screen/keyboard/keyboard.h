@@ -6,7 +6,6 @@
 #define key_stat 0x64
 
 //our functions
-unsigned char get_key();
-static inline unsigned char inb(unsigned short port);
+unsigned char get_key_code();
 
 #endif

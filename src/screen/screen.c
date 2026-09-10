@@ -1,3 +1,5 @@
+#include "keyboard\base_functions\base_functions.h"
+
 //vga pointer
 volatile char* vga = (volatile char*) 0xB8000;
 //where we are on the screen
@@ -35,7 +37,7 @@ void print_str(const char *msg, const int back_color) {
         */
         vga[i * 2 + 1] = back_color; //make dyamic background
         //add one to screen pos
-        screen_pos += 1;
+        screen_pos++;
     }
 }
 
@@ -55,4 +57,14 @@ void print_char(char msg, int color) {
     vga[screen_pos * 2] = msg;
     //set the color
     vga[screen_pos * 2 + 1] = color;
+    //increase screen pos
+    screen_pos++;
+}
+
+//this was made by ai too im just lazy
+void print_hex(unsigned int num, unsigned char color) {
+    char buffer[32];
+    itoa(num, buffer, 16);
+    print_str("0x", color);
+    print_str(buffer, color);
 }
