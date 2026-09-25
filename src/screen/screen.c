@@ -1,4 +1,4 @@
-#include "keyboard\base_functions\base_functions.h"
+#include "keyboard/keyboard.h"
 
 //vga pointer
 volatile char* vga = (volatile char*) 0xB8000;

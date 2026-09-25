@@ -7,5 +7,6 @@
 
 //our functions
 unsigned char get_key_code();
+void itoa(int num, char *str, int base);
 
 #endif

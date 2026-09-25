@@ -28,10 +28,10 @@ void kernel_main() {
         //get the key
         key = get_key_code();
         //check if the key is not zero 
-        //if (key != 0) {
+        if (key != 0) {
             //print it
-            print_hex(key, black);
-        //}
-        // __asm__("hlt");
+            print_char(key, black);
+        }
+        //__asm__("hlt");
     }
 }
