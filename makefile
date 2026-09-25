@@ -26,8 +26,8 @@ kernel.o: src\kernel.c folder
 	$(CC) $(CFLAGS) -c src\kernel.c -o build\kernel.o
 
 #compile stuff for the keyboard
-keyboard.o: src\screen\keyboard\keyboard.c folder
-	$(CC) $(CFLAGS) -c src\screen\keyboard\keyboard.c -o build\keyboard.o
+keyboard.o: src\keyboard\keyboard.c folder
+	$(CC) $(CFLAGS) -c src\keyboard\keyboard.c -o build\keyboard.o
 
 #compile the stuff for the screen
 screen.o: src\screen\screen.c folder

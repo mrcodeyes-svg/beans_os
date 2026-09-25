@@ -15,7 +15,6 @@
 void print_str(const char *msg, const int back_color);
 void clear(const int color);
 long len(const char *text);
-void print_char(char msg, int color);
-void print_hex(unsigned int num, unsigned char color);
+void print_char(const char msg, const int color);
 
 #endif
