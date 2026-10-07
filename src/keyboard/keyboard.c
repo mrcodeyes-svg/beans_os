@@ -19,3 +19,13 @@ unsigned char get_key_code() {
         return inb(key_data);
     }
 }
+
+//the scancode thing
+unsigned char get_key(char msg) {
+    if (msg == 30) {
+        return 'a';
+    } else {
+        return 0;
+    }
+    
+}

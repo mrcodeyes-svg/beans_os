@@ -8,5 +8,6 @@
 //our functions
 unsigned char get_key_code();
 void itoa(int num, char *str, int base);
+unsigned char get_key(char msg);
 
 #endif

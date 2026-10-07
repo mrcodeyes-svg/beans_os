@@ -12,14 +12,6 @@ void welcome() {
     print_str(welcome, black);
 }
 
-//a char to char * converter
-void str(char string, char* buffer) {
-    //this is it simple because char can only be something like "i"
-    buffer[0] = string;
-    //well we also add the null term
-    buffer[1] = '\0';
-}
-
 void kernel_main() {
     //say hi
     welcome();
@@ -27,22 +19,25 @@ void kernel_main() {
     //the buffer
     char string_buffer[2];
 
-    //make a var for the key
+    //make a var for the key code
+    char key_code = 0;
+    //the key
     char key = 0;
 
     while (1) {
         //get the key
-        key = get_key_code();
+        key_code = get_key_code();
         //check if the key is not zero 
-        if (key != 0) {
-            //get input then make it a char *
-            str(key, string_buffer);
-
-            //print it
-            print_str(string_buffer, black);
-            print_char(key, black);
-            //set it back to 0
-            key = 0;
+        if (key_code != 0) {
+            //the key
+            key = get_key(key_code);
+            //check if key is 0
+            if (key != 0) {
+                //print key
+                print_char(key, black);
+                //set it back to 0
+                key_code = 0;
+            }
         }
     }
 }
