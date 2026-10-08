@@ -20,12 +20,25 @@ unsigned char get_key_code() {
     }
 }
 
+//all the right codes non s means non shift
+char nons_list_chars[] = {
+    1, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 
+    '-', '=', 14, 15, 'q', 'w', 'e', 'r', 't', 
+    'y', 'u', 'i', 'o', 'p', '[', ']', 28, 29, 
+    'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 
+    'l', ';', '\'', '`', 42, '\\', 'z', 'x', 'c', 
+    'v', 'b', 'n', 'm', ',', '.', '/', 54, 55, 
+    56, ' ', 58, 59, 60, 61, 62, 63, 64, 
+    65, 66, 67, 68
+};
+
 //the scancode thing
 unsigned char get_key(char msg) {
-    if (msg == 30) {
-        return 'a';
-    } else {
+    //check
+    if (msg > 68) {
         return 0;
+    } else {
+        //get the char - 1 because of c it starts its lists at 0
+        return nons_list_chars[msg - 1];
     }
-    
 }
