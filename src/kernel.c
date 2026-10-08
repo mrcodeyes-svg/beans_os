@@ -1,10 +1,10 @@
-#include "screen\screen.h"
-#include "keyboard\keyboard.h"
+#include "intercept\screen\screen.h"
+#include "intercept\main_inter.h"
 
 //a welcome
 void welcome() {
     //clear the screen
-    clear(black);
+    full_clear(black);
     //hi
     char *welcome = "Hi and welcome to beans OS have a great time =)";
 

@@ -39,7 +39,7 @@ void print_str(const char *msg, const int back_color) {
 }
 
 //a clear function to clear the screen
-void clear(const int color) {
+void full_clear(const int color) {
     //a loop to do it easier
     for (int i = 0; i < 80 * 25; i++) {
         vga[i * 2] = ' ';
@@ -56,4 +56,20 @@ void print_char(const char msg, const int color) {
     vga[screen_pos * 2 + 1] = color;
     //increase screen pos
     screen_pos++;
+}
+
+//a function to make a backspace happen
+void backspace(const int back, const int color) {
+    //take one away and do what we normally do and also check
+    if (screen_pos > 0) {
+        screen_pos -= back;
+        vga[screen_pos * 2] = ' ';
+        vga[screen_pos * 2 + 1] = color;
+    }
+}
+
+//a enter function
+void enter() {
+    //add this and also move
+    screen_pos += 80 - (screen_pos % 80);
 }

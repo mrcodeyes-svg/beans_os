@@ -6,8 +6,8 @@
 #define key_stat 0x64
 
 //our functions
-unsigned char get_key_code();
+unsigned char get_key_code_main();
 void itoa(int num, char *str, int base);
-unsigned char get_key(char msg);
+unsigned char get_key_main(char msg);
 
 #endif

@@ -26,17 +26,20 @@ kernel.o: src\kernel.c folder
 	$(CC) $(CFLAGS) -c src\kernel.c -o build\kernel.o
 
 #compile stuff for the keyboard
-keyboard.o: src\keyboard\keyboard.c folder
-	$(CC) $(CFLAGS) -c src\keyboard\keyboard.c -o build\keyboard.o
+keyboard.o: src\intercept\keyboard\keyboard.c folder
+	$(CC) $(CFLAGS) -c src\intercept\keyboard\keyboard.c -o build\keyboard.o
 
 #compile the stuff for the screen
-screen.o: src\screen\screen.c folder
-	$(CC) $(CFLAGS) -c src\screen\screen.c -o build\screen.o
+screen.o: src\intercept\screen\screen.c folder
+	$(CC) $(CFLAGS) -c src\intercept\screen\screen.c -o build\screen.o
 
+#the main intercepter
+main_inter.o: src\intercept\keyboard\keyboard.c src\intercept\screen\screen.c folder
+	$(CC) $(CFLAGS) -c src\intercept\main_inter.c -o build\main_inter.o
 
 # Link object files into an ELF/PE intermediate file using linker script
-kernel.tmp: kernel_entry.o kernel.o keyboard.o screen.o folder
-	$(CC) $(CFLAGS) -T src\linker.ld build\keyboard.o build\screen.o build\kernel_entry.o build\kernel.o -o build\kernel.tmp
+kernel.tmp: kernel_entry.o kernel.o keyboard.o screen.o main_inter.o folder
+	$(CC) $(CFLAGS) -T src\linker.ld build\keyboard.o build\screen.o build\main_inter.o build\kernel_entry.o build\kernel.o -o build\kernel.tmp
 
 # Strip executable headers into a pure, raw binary
 kernel.bin: kernel.tmp folder

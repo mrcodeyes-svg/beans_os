@@ -13,8 +13,10 @@
 
 //our funcions
 void print_str(const char *msg, const int back_color);
-void clear(const int color);
+void full_clear(const int color);
 long len(const char *text);
 void print_char(const char msg, const int color);
+void backspace(const int back, const int color);
+void enter();
 
 #endif

@@ -9,7 +9,7 @@ static inline unsigned char inb(unsigned short port) {
 
 //this was human and ai
 //get code and char
-unsigned char get_key_code() {
+unsigned char get_key_code_main() {
     //if it has nothing then we return 0
     if ((inb(key_stat) & 0x01) == 0) {
         return 0;
@@ -23,8 +23,8 @@ unsigned char get_key_code() {
 //all the right codes non s means non shift
 char nons_list_chars[] = {
     1, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 
-    '-', '=', 14, 15, 'q', 'w', 'e', 'r', 't', 
-    'y', 'u', 'i', 'o', 'p', '[', ']', 28, 29, 
+    '-', '=', 8, 15, 'q', 'w', 'e', 'r', 't', 
+    'y', 'u', 'i', 'o', 'p', '[', ']', '\n', 29, 
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 
     'l', ';', '\'', '`', 42, '\\', 'z', 'x', 'c', 
     'v', 'b', 'n', 'm', ',', '.', '/', 54, 55, 
@@ -33,9 +33,9 @@ char nons_list_chars[] = {
 };
 
 //the scancode thing
-unsigned char get_key(char msg) {
+unsigned char get_key_main(char msg) {
     //check
-    if (msg > 68) {
+    if (msg & 0x80) {
         return 0;
     } else {
         //get the char - 1 because of c it starts its lists at 0
