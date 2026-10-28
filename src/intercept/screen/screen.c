@@ -3,6 +3,17 @@ volatile char* vga = (volatile char*) 0xB8000;
 //where we are on the screen
 static long screen_pos = 0;
 
+//the before enter locs too
+int before_enter[1024];
+//the before
+int before_time_append = 0;
+//enter locations
+int enter_locs[1024];
+//the amount of times we have appended
+int time_append = 0;
+//the last pos print_admin was used
+int last_admin_print = 0;
+
 //make a len function it has 0 because we also cound \0
 long len(const char *text) {
     //make i
@@ -45,9 +56,9 @@ void full_clear(const int color) {
         vga[i * 2] = ' ';
         vga[i * 2 + 1] = color;
     }
-    screen_pos = 0; //set to 0 
+    screen_pos = 0; //set to 0
+    last_admin_print = 0; //also set to 0
 }
-
 //a function to print a char
 void print_char(const char msg, const int color) {
     //set the msg
@@ -60,8 +71,18 @@ void print_char(const char msg, const int color) {
 
 //a function to make a backspace happen
 void backspace(const int back, const int color) {
+    //checks
     //take one away and do what we normally do and also check
-    if (screen_pos > 0) {
+    if (screen_pos > 0 && !(last_admin_print >= screen_pos - back)) {
+        //check if we are going back a lot
+        if (enter_locs[time_append -1] == screen_pos) {
+            //set screen pos
+            screen_pos = before_enter[before_time_append - 1];
+            //subtract
+            time_append--;
+            before_time_append--;
+            return;
+        }
         screen_pos -= back;
         vga[screen_pos * 2] = ' ';
         vga[screen_pos * 2 + 1] = color;
@@ -69,7 +90,37 @@ void backspace(const int back, const int color) {
 }
 
 //a enter function
-void enter() {
+void enter(int track) {
+    if (track) {
+        //append to the before
+        before_enter[before_time_append] = screen_pos;
+    }
     //add this and also move
     screen_pos += 80 - (screen_pos % 80);
+    //check if we get it
+    if (track) {
+        //add the screen pos to the thing and increase time append by 1 and the before time append
+        enter_locs[time_append] = screen_pos;
+        time_append++;
+        before_time_append++;
+    }
+}
+
+//a put pixel function
+void put_pixel(int x, int y, int color) {
+    //make pos x
+    int pos = x * 2;
+    //for loop to get y right
+    for (int i = 0; i < y; i++) {
+        pos += 80;
+    }
+    //put the pixel
+    vga[pos + 1] = color;
+}
+
+//to print something but make sure it cant get removed
+void admin_print(const char *msg, const int color) {
+    //print it then we set last admin print to screen pos
+    print_str(msg, color);
+    last_admin_print = screen_pos-1;
 }

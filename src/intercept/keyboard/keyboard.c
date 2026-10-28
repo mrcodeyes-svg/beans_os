@@ -23,7 +23,7 @@ unsigned char get_key_code_main() {
 //all the right codes non s means non shift
 char nons_list_chars[] = {
     1, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 
-    '-', '=', 8, 15, 'q', 'w', 'e', 'r', 't', 
+    '-', '=', 8, '\t', 'q', 'w', 'e', 'r', 't', 
     'y', 'u', 'i', 'o', 'p', '[', ']', '\n', 29, 
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 
     'l', ';', '\'', '`', 42, '\\', 'z', 'x', 'c', 
@@ -34,11 +34,29 @@ char nons_list_chars[] = {
 
 //the scancode thing
 unsigned char get_key_main(char msg) {
-    //check
-    if (msg & 0x80) {
+    //check if it is a unpress code
+    if (msg & 0x80 || msg == 29 || msg == 56 || msg == 42) {
         return 0;
-    } else {
-        //get the char - 1 because of c it starts its lists at 0
-        return nons_list_chars[msg - 1];
     }
+    for (int i = 54; i < 68; i++) {
+        if (msg != 57 & msg == i) {
+            return 0;
+        }
+    }
+    //get the char - 1 because of c it starts its lists at 0
+    return nons_list_chars[msg - 1];
+    
+}
+//get a key like f11
+unsigned char get_key_spc(char msg) {
+    //get it and if we dont get one of these keys return 0
+    if (msg == 29 || msg == 56 || msg == 42) {
+        return msg;
+    }
+    for (int i = 54; i < 68; i++) {
+        if (msg != 57 & msg == i) {
+            return msg;
+        }
+    }
+    return 0;
 }

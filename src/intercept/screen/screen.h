@@ -17,6 +17,8 @@ void full_clear(const int color);
 long len(const char *text);
 void print_char(const char msg, const int color);
 void backspace(const int back, const int color);
-void enter();
+void enter(int track);
+void put_pixel(int x, int y, int color);
+void admin_print(const char *msg, const int color);
 
 #endif

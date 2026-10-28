@@ -9,5 +9,6 @@
 unsigned char get_key_code_main();
 void itoa(int num, char *str, int base);
 unsigned char get_key_main(char msg);
+unsigned char get_key_spc(char msg);
 
 #endif

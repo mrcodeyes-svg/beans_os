@@ -16,13 +16,16 @@ void kernel_main() {
     //say hi
     welcome();
 
-    //the buffer
-    char string_buffer[2];
-
     //make a var for the key code
     char key_code = 0;
     //the key
     char key = 0;
+
+    //call enter
+    enter(false);
+
+    //start the users cmd/term
+    admin_print("beans_os> ", black);
 
     while (1) {
         //get the key
@@ -30,7 +33,7 @@ void kernel_main() {
         //check if the key is not zero 
         if (key_code != 0) {
             //the key
-            key = get_key(key_code);
+            key = get_key_cmd(key_code);
             //check if key is 0
             if (key != 0) {
                 //print key
